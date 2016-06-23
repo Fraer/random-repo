@@ -1,0 +1,87 @@
+<div class="row">
+    <div growl></div>
+    <div class="col-md-12">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Airports by Country Code OR Country Name
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form name="myForm">
+                            <label>Country Code:
+                                <input type="text" name="input" ng-model="ctrl.userText">
+                            </label>
+                            <button class="btn btn-default" ng-click="ctrl.updatePage(1)">Search</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover" align="center" border="1">
+                            <thead>
+                            <tr>
+                                <td>Airport</td>
+                                <td>Runways</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="a in ctrl.page.items">
+                                <td>{{a.name}}</td>
+                                <td>
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <td>Id</td>
+                                            <td>Length</td>
+                                            <td>Width</td>
+                                            <td>Surface</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="r in a.runways">
+                                            <td>{{r.id}}</td>
+                                            <td>{{r.length}}</td>
+                                            <td>{{r.width}}</td>
+                                            <td>{{r.surface}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <uib-pagination
+                                        ng-model="ctrl.currentPage"
+                                        ng-change="ctrl.updatePage(ctrl.currentPage)"
+                                        total-items="ctrl.page.total"
+                                        item-per-page="ctrl.itemsPerPage"
+                                        max-size="ctrl.maxSize"
+                                        boundary-links="true"
+                                        previous-text="<<"
+                                        next-text=">>">
+                                </uib-pagination>
+                            </div>
+                            <div class="col-md-4">
+                                <ul class="pagination pull-right">
+                                    <li class="disabled">
+                                        <a>Displaying <select ng-options="nb for nb in [10, 20, 50, 100]"
+                                                              ng-model="ctrl.itemsPerPage"
+                                                              ng-change="ctrl.updatePage(ctrl.currentPage)"
+                                                              title="Show"></select> from {{ctrl.page.from}} to {{ctrl.page.to}} of
+                                            {{ctrl.page.total}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

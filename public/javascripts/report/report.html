@@ -1,0 +1,91 @@
+<div class="row">
+    <div growl></div>
+    <div class="col-md-6">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Top 10 Countries with more airports
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover" align="center" border="1">
+                    <tr>
+                        <td>Name</td>
+                        <td>Airports Count</td>
+                    </tr>
+                    <tr ng-repeat="ac in ctrl.highestAirports">
+                        <td>{{ac.name}}</td>
+                        <td>{{ac.count}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Top 10 Countries with less airports
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover" align="center" border="1">
+                    <tr>
+                        <td>Name</td>
+                        <td>Airports Count</td>
+                    </tr>
+                    <tr ng-repeat="ac in ctrl.lowestAirports">
+                        <td>{{ac.name}}</td>
+                        <td>{{ac.count}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Surfaces per Country
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-8">
+                    <form class="form-inline" role="form" name="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <label>Select Country:</label>
+                                <select ng-init="ctrl.fetchCountries()"
+                                        ng-model="ctrl.currentCountry"
+                                        ng-options="country.name for country in ctrl.countries | orderBy:['name']"
+                                        ng-change="ctrl.fetchSurfaceTypes()"
+                                        id="match">
+                                </select>
+                            </div>
+                            <div ng-show="ctrl.fetchingSurfaces">Fetching ...</div>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div class="col-md-4">
+                    <table class="table table-hover" align="center" border="1">
+                        <thead>
+                        <tr>
+                            <td>Surface Types</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="s in ctrl.surfaceTypes">
+                            <td>{{s}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
