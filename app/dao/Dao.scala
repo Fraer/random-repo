@@ -9,7 +9,6 @@ import util.SparkLoader
 @Singleton
 class Dao @Inject()(val s: SparkLoader) extends util.Logging {
 
-
   def airportsByCountryCode(countryCode: String, page: Int, pageSize: Int): Page[Airport] = {
     val offset = pageSize * page
     val df = s.sqlCtx.sql(
@@ -69,12 +68,11 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
       .toMap
   }
 
-  def countries(): Map[String, String] = {
+  def countries(): Seq[Country] = {
     s.sqlCtx
       .sql(s"""SELECT code, name FROM country ORDER BY name""")
       .collect()
-      .map{row => row.getString(0) -> row.getString(1)}
-      .toMap
+      .map{row => Country(row.getString(0),row.getString(1))}
   }
 
   def findSimilarCountries(input: String, nbRows: Int = 10): Seq[Country] = {

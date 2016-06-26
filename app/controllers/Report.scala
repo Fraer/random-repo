@@ -27,13 +27,14 @@ class Report @Inject()(val dao: Dao)
   }
 
   def countries() = Action(parse.empty) { req =>
-    Ok(Json.toJson(dao.countries().map { x =>
-      Json.obj("code" -> x._1, "name" -> x._2)
-    }))
+    Ok(Json.toJson(dao.countries()))
   }
 
   def surfaceTypesPerCountry(countryCode: String) = Action(parse.empty) { req =>
-    Ok(Json.toJson(dao.surfaceTypesByCountry(countryCode)))
+    if (countryCode.length != 2)
+      BadRequest("Invalid country code")
+    else
+      Ok(Json.toJson(dao.surfaceTypesByCountry(countryCode)))
   }
 
   def mostCommonRunwayLatitude = Action(parse.empty) { req =>

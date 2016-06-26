@@ -1,16 +1,29 @@
-XL-Starship
+Airports - assessment for Lunatech
 by vladimirbodnar@yahoo.fr
 
-To start an instance, set JAVA_HOME then navigate to bin folder and run the starter script.
+Java 8 is required.
+
+The PATH must contain winutils binary, to do so download the binary and add it to PATH.
+For windows download winutils:
+- 64bits: https://github.com/steveloughran/winutils/tree/master/hadoop-2.6.0/bin
+- 32bits: https://code.google.com/p/rrd-hadoop-win32/source/checkout
+On windows PATH=%path_to_winutils%
+
+To start the server, set JAVA_HOME then navigate to bin folder and run the starter script.
 
 Specify the application port with -Dhttp.port, default port is 9000.
 
 For example:
 
-> xl-starship.bat -Dhttp.port=9001
+> airports.bat -Dhttp.port=9001
 
 Then in your browser got to http://localhost:9001
 
-From ui specify the hostname and the port of another XL-Starship instance, then click on Challenge
-to create a new game. Once the game is created, if it's your turn, select squares by clicking ont
-the enemy board and click on fire.
+The home page contains links to Query and Reports pages.
+
+The Query page enables to user to get airports with runways by country name.
+
+The Reports page contains:
+- Top 10 countries with most airports
+- Top 10 countries with less airports
+- Surface types by country

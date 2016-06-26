@@ -17,12 +17,16 @@ class Query @Inject()(val dao: Dao)
   }
 
   def airportsByCountryCode(countryCode: String, page: Int, pageSize:Int) = Action(parse.empty) { req =>
-    val res = dao.airportsByCountryCode(countryCode, page, pageSize)
-    Ok(Json.obj(
-      "items" -> res.items,
-      "from" -> (res.offset+1),
-      "to" -> (res.offset + res.items.size),
-      "total" -> res.total
-    ))
+    if (countryCode.length != 2)
+      BadRequest("Invalid country code")
+    else {
+      val res = dao.airportsByCountryCode(countryCode, page, pageSize)
+      Ok(Json.obj(
+        "items" -> res.items,
+        "from" -> (res.offset + 1),
+        "to" -> (res.offset + res.items.size),
+        "total" -> res.total
+      ))
+    }
   }
 }

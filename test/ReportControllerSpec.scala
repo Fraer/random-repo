@@ -21,7 +21,7 @@ class ReportControllerSpec extends PlaySpec with Results with MockitoSugar {
   val mtrlzr = mockApp.injector.instanceOf[Materializer]
 
   "highestAirports" should {
-    "should return an array of 10 json objects {name: string, count: number}" in {
+    "should return a json array of 10 objects {name: string, count: number}" in {
       val res = (0 to 10).map { x => s"Country$x" -> x.toLong }.toMap
 
       val dao = mock[Dao]
@@ -39,7 +39,7 @@ class ReportControllerSpec extends PlaySpec with Results with MockitoSugar {
   }
 
   "lowestAirports" should {
-    "should return an array of 10 json objects {name: string, count: number}" in {
+    "should return a json array of 10 objects {name: string, count: number}" in {
       val res = (0 to 10).map { x => s"Country$x" -> x.toLong }.toMap
 
       val dao = mock[Dao]
@@ -56,21 +56,42 @@ class ReportControllerSpec extends PlaySpec with Results with MockitoSugar {
     }
   }
 
-  "lowestAirports" should {
-    "should return an array of 10 json objects {name: string, count: number}" in {
-      val res = (0 to 10).map { x => s"Country$x" -> x.toLong }.toMap
+  "countries" should {
+    "should return a json array of objects" in {
+      val countries = (0 to 10).map { x => Country(x.toString, s"Country$x")}
 
       val dao = mock[Dao]
-      when(dao.lowestAirports()).thenReturn(res)
+      when(dao.countries()).thenReturn(countries)
 
       val controller = new Report(dao)
-      val result: Accumulator[ByteString, Result] = controller.lowestAirports()(FakeRequest())
+      val result: Accumulator[ByteString, Result] = controller.countries()(FakeRequest())
       val response: Future[Result] = result.run()(mtrlzr)
 
-      contentAsJson(response) mustBe Json.toJson(
-        res.map { x =>
-          Json.obj("name" -> x._1, "count" -> x._2)
-        })
+      contentAsJson(response) mustBe Json.toJson(countries)
+    }
+  }
+
+  "surfaceTypesPerCountry" should {
+    "should return a json array of string object" in {
+      val surfaceTypes = Seq("ASP", "PEM")
+
+      val dao = mock[Dao]
+      when(dao.surfaceTypesByCountry("US")).thenReturn(surfaceTypes)
+
+      val controller = new Report(dao)
+      val result: Accumulator[ByteString, Result] = controller.surfaceTypesPerCountry("US")(FakeRequest())
+      val response: Future[Result] = result.run()(mtrlzr)
+
+      contentAsJson(response) mustBe Json.toJson(surfaceTypes)
+    }
+
+    "should return bad request if invalid country code" in {
+      val dao = mock[Dao]
+      val controller = new Report(dao)
+      val result: Accumulator[ByteString, Result] = controller.surfaceTypesPerCountry("XXX")(FakeRequest())
+      val response: Future[Result] = result.run()(mtrlzr)
+
+      await(response) mustBe BadRequest("Invalid country code")
     }
   }
 

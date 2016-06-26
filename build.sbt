@@ -1,4 +1,4 @@
-name := "lunatech"
+name := "airports"
 
 version := "1.0"
 
