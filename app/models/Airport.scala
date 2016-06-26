@@ -1,6 +1,6 @@
 package models
 
-case class Airport(id: Int, name: String, runways: Seq[Runway])
+case class Airport(id: Int, name: String, region: String, runways: Seq[Runway])
 
 object Airport {
 
@@ -10,10 +10,12 @@ object Airport {
   implicit val AirportToJson: Writes[Airport] = (
     (__ \ "id").write[Int] ~
       (__ \ "name").write[String] ~
+      (__ \ "region").write[String] ~
       (__ \ "runways").write[Seq[Runway]]
     ) ((airport: Airport) => (
     airport.id,
     airport.name,
+    airport.region,
     airport.runways
     ))
 }

@@ -9,15 +9,14 @@ import play.api.mvc.{Action, Controller}
 
 /** main controller */
 @Singleton
-class Query @Inject()(val dao: Dao,
-                      val webJarAssets: WebJarAssets)
+class Query @Inject()(val dao: Dao)
   extends Controller with Logging {
 
-//  def findCountryByName(countryCode: String) = Action(parse.empty) { req =>
-//    Ok(Json.toJson(dao.airportsByCountryCode(countryCode, 0, 10)))
-//  }
+  def fetchCountries(input: String) = Action(parse.empty) { req =>
+    Ok(Json.toJson(dao.findSimilarCountries(input)))
+  }
 
-  def findCountryByCode(countryCode: String, page: Int, pageSize:Int) = Action(parse.empty) { req =>
+  def airportsByCountryCode(countryCode: String, page: Int, pageSize:Int) = Action(parse.empty) { req =>
     val res = dao.airportsByCountryCode(countryCode, page, pageSize)
     Ok(Json.obj(
       "items" -> res.items,

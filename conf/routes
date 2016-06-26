@@ -9,7 +9,9 @@ GET  /lowestAirports                      controllers.Report.lowestAirports
 GET  /surfaceTypes/:countryCode           controllers.Report.surfaceTypesPerCountry(countryCode)
 GET  /countries                           controllers.Report.countries()
 
-GET  /airportsByCountryCode               controllers.Query.findCountryByCode(code:String, p:Int ?= 0, s:Int ?= 2)
+GET  /airportsByCountryCode               controllers.Query.airportsByCountryCode(code:String, p:Int ?= 0, s:Int ?= 2)
+
+GET  /fetchCountries                      controllers.Query.fetchCountries(input:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

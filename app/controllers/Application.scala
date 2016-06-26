@@ -8,8 +8,7 @@ import play.api.mvc.{Action, Controller}
 
 /** main controller */
 @Singleton
-class Application @Inject()(val dao: Dao,
-                            val webJarAssets: WebJarAssets)
+class Application @Inject()(val webJarAssets: WebJarAssets)
   extends Controller with Logging {
 
   def index = Action(parse.empty) { req =>
