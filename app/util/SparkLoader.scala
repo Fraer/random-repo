@@ -1,10 +1,9 @@
-package dao
+package util
 
 import javax.inject.{Inject, Singleton}
 
 import org.apache.spark.sql.{DataFrame, SQLContext}
 import org.apache.spark.{SparkConf, SparkContext}
-import util.CsvPaths
 
 /**
   * Handles configuration, context and creates data frames

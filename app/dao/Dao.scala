@@ -1,9 +1,10 @@
 package dao
 
 import javax.inject.{Inject, Singleton}
-import org.apache.spark.sql.functions._
 
+import org.apache.spark.sql.functions._
 import models.{Airport, Country, Page, Runway}
+import util.SparkLoader
 
 @Singleton
 class Dao @Inject()(val s: SparkLoader) extends util.Logging {
