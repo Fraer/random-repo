@@ -16,7 +16,7 @@
 
          that.asyncSelected = null;
          that.getLocation = function(val) {
-             return $http.get('/fetchCountries', {
+             return $http.get('/similarCountries', {
                params: {
                  input: val
                }

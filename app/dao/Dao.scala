@@ -75,7 +75,7 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
       .map{row => Country(row.getString(0),row.getString(1))}
   }
 
-  def findSimilarCountries(input: String, nbRows: Int = 10): Seq[Country] = {
+  def similarCountries(input: String, nbRows: Int = 10): Seq[Country] = {
     logger.info(s"Looking for similar countries like $input")
     s.countries.filter(upper(col("name")).like(s"%${input.toUpperCase}%") )
       .select(col("code"), col("name"))

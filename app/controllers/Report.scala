@@ -7,7 +7,6 @@ import dao.Dao
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
 
-/** Report controller */
 @Singleton
 class Report @Inject()(val dao: Dao)
   extends Controller with Logging {

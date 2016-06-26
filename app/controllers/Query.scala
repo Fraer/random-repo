@@ -2,20 +2,20 @@ package controllers
 
 import javax.inject.{Inject, Singleton}
 
-import _root_.util.Logging
+import util.Logging
 import dao.Dao
 import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
 
-/** main controller */
 @Singleton
 class Query @Inject()(val dao: Dao)
   extends Controller with Logging {
 
-  def fetchCountries(input: String) = Action(parse.empty) { req =>
-    Ok(Json.toJson(dao.findSimilarCountries(input)))
+  def similarCountries(input: String) = Action(parse.empty) { req =>
+    Ok(Json.toJson(dao.similarCountries(input)))
   }
 
+  /** Returns a json array that represents a page of airports by country code */
   def airportsByCountryCode(countryCode: String, page: Int, pageSize:Int) = Action(parse.empty) { req =>
     if (countryCode.length != 2)
       BadRequest("Invalid country code")

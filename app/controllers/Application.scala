@@ -6,7 +6,6 @@ import _root_.util.Logging
 import dao.Dao
 import play.api.mvc.{Action, Controller}
 
-/** main controller */
 @Singleton
 class Application @Inject()(val webJarAssets: WebJarAssets) extends Controller {
 

@@ -25,10 +25,10 @@ class QueryControllerSpec extends PlaySpec with Results with MockitoSugar {
       val countries = Seq(Country("1", "Bielorus"), Country("2", "Russia"))
 
       val dao = mock[Dao]
-      when(dao.findSimilarCountries("Rus")).thenReturn(countries)
+      when(dao.similarCountries("Rus")).thenReturn(countries)
 
       val controller = new Query(dao)
-      val result: Accumulator[ByteString, Result]  = controller.fetchCountries("Rus")(FakeRequest())
+      val result: Accumulator[ByteString, Result]  = controller.similarCountries("Rus")(FakeRequest())
       val response: Future[Result] = result.run()(mtrlzr)
 
       contentAsJson(response) mustBe Json.toJson(countries)
@@ -36,10 +36,10 @@ class QueryControllerSpec extends PlaySpec with Results with MockitoSugar {
 
     "should return empty json array if no country was found" in {
       val dao = mock[Dao]
-      when(dao.findSimilarCountries("Atl")).thenReturn(Seq())
+      when(dao.similarCountries("Atl")).thenReturn(Seq())
 
       val controller = new Query(dao)
-      val result: Accumulator[ByteString, Result]  = controller.fetchCountries("Atl")(FakeRequest())
+      val result: Accumulator[ByteString, Result]  = controller.similarCountries("Atl")(FakeRequest())
       val response: Future[Result] = result.run()(mtrlzr)
 
       contentAsJson(response) mustBe Json.toJson(Seq.empty[Country])
