@@ -4,12 +4,13 @@ import javax.inject.{Inject, Singleton}
 
 import org.apache.spark.sql.{DataFrame, SQLContext}
 import org.apache.spark.{SparkConf, SparkContext}
+import util.CsvPaths
 
 /**
-  * Handles configuration, context and so
+  * Handles configuration, context and creates data frames
   */
 @Singleton
-class SparkLoader @Inject()() extends util.Logging {
+class SparkLoader @Inject()(val paths: CsvPaths) {
 
   //build the SparkConf object at once
   lazy val conf = {
@@ -29,9 +30,9 @@ class SparkLoader @Inject()() extends util.Logging {
     s
   }
 
-  lazy val countries = load("resources/countries.csv", "country")
-  lazy val airports = load("resources/airports.csv", "airport")
-  lazy val runways = load("resources/runways.csv", "runway")
+  lazy val countries = load(paths.countriesPath, "country")
+  lazy val airports = load(paths.airportsPath, "airport")
+  lazy val runways = load(paths.runwaysPath, "runway")
 
   private def load(path: String, tableName: String): DataFrame = {
     val df = s.read.format("com.databricks.spark.csv").option("header", "true")
