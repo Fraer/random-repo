@@ -11,24 +11,33 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <form name="myForm">
-                            <label>
-                                <input type="text" ng-model="ctrl.asyncSelected"
-                                       placeholder="Country Name"
-                                       uib-typeahead="country as country.name for country in ctrl.getLocation($viewValue)"
-                                       typeahead-loading="loadingCountries"
-                                       typeahead-no-results="noResults"
-                                       class="form-control">
-                                <i ng-show="loadingCountries" class="glyphicon glyphicon-refresh"></i>
-                                <div ng-show="noResults">
-                                    <i class="glyphicon glyphicon-remove"></i> No Results Found
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form name="myForm">
+                                    <input type="text" ng-model="ctrl.asyncSelected"
+                                           placeholder="Country Name"
+                                           uib-typeahead="country as country.name for country in ctrl.getLocation($viewValue)"
+                                           typeahead-loading="loadingCountries"
+                                           typeahead-no-results="noResults"
+                                           class="form-control">
+                                    <i ng-show="loadingCountries" class="glyphicon glyphicon-refresh"></i>
+                                    <div ng-show="noResults">
+                                        <i class="glyphicon glyphicon-remove"></i> No Results Found
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-default" ng-click="ctrl.updatePage(1)">Search</button>
+                            </div>
+                            <div class="col-md-6">
+                                <div ng-show="ctrl.searching">
+                                    Searching for country with code {{ctrl.asyncSelected.code}}, please wait ...
                                 </div>
-                            </label>
-                            <button class="btn btn-default" ng-click="ctrl.updatePage(1)">Search</button>
-                            <div ng-show="ctrl.searching">Searching for country with code {{ctrl.asyncSelected.code}}, please wait ...</div>
-                        </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="row">&nbsp;</div>
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table table-hover" align="center" border="1">
@@ -85,7 +94,8 @@
                                         <a>Displaying <select ng-options="nb for nb in [10, 20, 50, 100]"
                                                               ng-model="ctrl.itemsPerPage"
                                                               ng-change="ctrl.updatePage(ctrl.currentPage)"
-                                                              title="Show"></select> from {{ctrl.page.from}} to {{ctrl.page.to}} of
+                                                              title="Show"></select> from {{ctrl.page.from}} to
+                                            {{ctrl.page.to}} of
                                             {{ctrl.page.total}}</a>
                                     </li>
                                 </ul>
