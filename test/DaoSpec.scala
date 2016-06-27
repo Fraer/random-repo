@@ -35,7 +35,7 @@ class DaoSpec extends PlaySpec with Results with MockitoSugar {
 
   "similarCountries" should {
     "should return similar countries" in {
-      val res = dao.similarCountries("Ant")
+      val res = dao.countriesWithNameLike("Ant")
       res.size mustBe 2
       res should contain (Country("AQ","Antarctica"))
       res should contain (Country("AG","Antigua and Barbuda"))
@@ -49,6 +49,13 @@ class DaoSpec extends PlaySpec with Results with MockitoSugar {
       res should contain ("TURF")
       res should contain ("GRASS")
       res should contain ("GRAVEL")
+    }
+  }
+
+  "countryByCode" should {
+    "should return an option[country]" in {
+      val res = dao.countryByCode("AS")
+      res mustBe Some(Country("AS","American Samoa"))
     }
   }
 }

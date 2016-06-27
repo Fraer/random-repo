@@ -15,7 +15,7 @@
                             <div class="col-md-4">
                                 <form name="myForm">
                                     <input type="text" ng-model="ctrl.asyncSelected"
-                                           placeholder="Country Name"
+                                           placeholder="Country Name or Code"
                                            uib-typeahead="country as country.name for country in ctrl.getLocation($viewValue)"
                                            typeahead-loading="loadingCountries"
                                            typeahead-no-results="noResults"
@@ -53,7 +53,8 @@
                                 <td>{{a.name}}</td>
                                 <td>{{a.region}}</td>
                                 <td>
-                                    <table class="table table-hover">
+                                    <div ng-if="a.runways.length == 0">No data</div>
+                                    <table ng-if="a.runways.length > 0" class="table table-hover">
                                         <thead>
                                         <tr>
                                             <td>Id</td>

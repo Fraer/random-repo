@@ -8,11 +8,15 @@ import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
 
 @Singleton
-class Query @Inject()(val dao: Dao)
-  extends Controller with Logging {
+class Query @Inject()(val dao: Dao) extends Controller with Logging {
 
   def similarCountries(input: String) = Action(parse.empty) { req =>
-    Ok(Json.toJson(dao.similarCountries(input)))
+    val maybeCountry = if (input.length == 2) dao.countryByCode(input) else None
+    val res = maybeCountry match {
+      case Some(country) => Seq(country)
+      case None => dao.countriesWithNameLike(input)
+    }
+    Ok(Json.toJson(res))
   }
 
   /** Returns a json array that represents a page of airports by country code */

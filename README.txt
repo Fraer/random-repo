@@ -4,10 +4,12 @@ by vladimirbodnar@yahoo.fr
 Java 8 is required.
 
 The PATH must contain winutils binary, to do so download the binary and add it to PATH.
-For windows download winutils:
+For windows download winutils.exe and libwinutils.lib:
 - 64bits: https://github.com/steveloughran/winutils/tree/master/hadoop-2.6.0/bin
 - 32bits: https://code.google.com/p/rrd-hadoop-win32/source/checkout
-On windows PATH=%path_to_winutils%
+
+In case of "java.io.IOException: Could not locate executable null\bin\winutils.exe"
+Specify hadoop home by property, for ex: -Dhadoop.home.dir=C:\tools\hadoop
 
 To start the server, set JAVA_HOME then navigate to bin folder and run the starter script.
 
