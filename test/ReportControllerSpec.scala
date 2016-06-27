@@ -22,7 +22,7 @@ class ReportControllerSpec extends PlaySpec with Results with MockitoSugar {
 
   "highestAirports" should {
     "should return a json array of 10 objects {name: string, count: number}" in {
-      val res = (0 to 10).map { x => s"Country$x" -> x.toLong }.toMap
+      val res = (0 to 10).map { x => s"Country$x" -> x.toLong }
 
       val dao = mock[Dao]
       when(dao.highestAirports()).thenReturn(res)
@@ -40,7 +40,7 @@ class ReportControllerSpec extends PlaySpec with Results with MockitoSugar {
 
   "lowestAirports" should {
     "should return a json array of 10 objects {name: string, count: number}" in {
-      val res = (0 to 10).map { x => s"Country$x" -> x.toLong }.toMap
+      val res = (0 to 10).map { x => s"Country$x" -> x.toLong }
 
       val dao = mock[Dao]
       when(dao.lowestAirports()).thenReturn(res)
@@ -76,7 +76,7 @@ class ReportControllerSpec extends PlaySpec with Results with MockitoSugar {
       val surfaceTypes = Seq("ASP", "PEM")
 
       val dao = mock[Dao]
-      when(dao.surfaceTypesByCountry("US")).thenReturn(surfaceTypes)
+      when(dao.surfaceTypesByCountryCode("US")).thenReturn(surfaceTypes)
 
       val controller = new Report(dao)
       val result: Accumulator[ByteString, Result] = controller.surfaceTypesPerCountry("US")(FakeRequest())

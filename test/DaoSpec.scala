@@ -33,7 +33,7 @@ class DaoSpec extends PlaySpec with Results with MockitoSugar {
     }
   }
 
-  "similarCountries" should {
+  "countriesWithNameLike" should {
     "should return similar countries" in {
       val res = dao.countriesWithNameLike("Ant")
       res.size mustBe 2
@@ -44,7 +44,7 @@ class DaoSpec extends PlaySpec with Results with MockitoSugar {
 
   "surfaceTypesByCountry" should {
     "should return surface type of a country" in {
-      val res = dao.surfaceTypesByCountry("AS")
+      val res = dao.surfaceTypesByCountryCode("AS")
       res.size mustBe 3
       res should contain ("TURF")
       res should contain ("GRASS")
@@ -56,6 +56,31 @@ class DaoSpec extends PlaySpec with Results with MockitoSugar {
     "should return an option[country]" in {
       val res = dao.countryByCode("AS")
       res mustBe Some(Country("AS","American Samoa"))
+    }
+  }
+
+  "runwaysByAirport" should {
+    "should return all runways of an airport" in {
+      val res = dao.runwaysByAirport(10)
+      res.size mustBe 3
+      res.head.id mustBe 10
+      res.last.id mustBe 12
+    }
+  }
+
+  "lowestAirports" should {
+    "should return 10 countries with less airports" in {
+      val res = dao.lowestAirports()
+      res.size mustBe 10
+      res should not contain "American Samoa"
+    }
+  }
+
+  "highestAirports" should {
+    "should return 10 countries with highest airports count" in {
+      val res = dao.highestAirports()
+      res.size mustBe 10
+      res.head._1 mustBe "American Samoa"
     }
   }
 }

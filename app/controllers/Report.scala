@@ -33,7 +33,7 @@ class Report @Inject()(val dao: Dao)
     if (countryCode.length != 2)
       BadRequest("Invalid country code")
     else
-      Ok(Json.toJson(dao.surfaceTypesByCountry(countryCode)))
+      Ok(Json.toJson(dao.surfaceTypesByCountryCode(countryCode)))
   }
 
   def mostCommonRunwayLatitude = Action(parse.empty) { req =>

@@ -44,8 +44,8 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
   }
 
   /** Select countries with more airports */
-  def highestAirports(): Map[String, Long] = {
-    logger.info("Fetching top 10 countries wist highest number of airports")
+  def highestAirports(): Seq[(String, Long)] = {
+    logger.info("Fetching top 10 countries with highest number of airports")
     s.sqlCtx.sql(
       """SELECT c.name, x.count FROM
            (SELECT iso_country, count(id) as count FROM airport GROUP BY iso_country) x
@@ -53,11 +53,11 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
         ORDER BY x.count DESC LIMIT 10""")
         .collect()
         .map{row => row.getString(0) -> row.getLong(1)}
-        .toMap
   }
 
   /** Select countries with less airports */
-  def lowestAirports(): Map[String, Long] = {
+  def lowestAirports(): Seq[(String, Long)] = {
+    logger.info("Fetching top 10 countries with lowest number of airports")
     s.sqlCtx.sql(
       """SELECT c.name, x.count FROM
            (SELECT iso_country, count(id) as count FROM airport GROUP BY iso_country) x
@@ -65,10 +65,10 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
         ORDER BY x.count ASC LIMIT 10""")
       .collect()
       .map{row => row.getString(0) -> row.getLong(1)}
-      .toMap
   }
 
   def countries(): Seq[Country] = {
+    logger.info("Fetching all countries")
     s.sqlCtx
       .sql(s"""SELECT code, name FROM country ORDER BY name""")
       .collect()
@@ -92,7 +92,7 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
       .map{row => Country(row.getString(0), row.getString(1))}
   }
 
-  def surfaceTypesByCountry(countryCode: String): Seq[String] = {
+  def surfaceTypesByCountryCode(countryCode: String): Seq[String] = {
     logger.info(s"Fetching distinct surfaceTypes in $countryCode")
     s.sqlCtx
       .sql(s"""SELECT distinct r.surface
