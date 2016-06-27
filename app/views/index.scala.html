@@ -1,0 +1,57 @@
+@(webJarAssets: WebJarAssets)
+
+<!DOCTYPE html>
+<html ng-app="airports">
+    <head>
+        <title>Airport Reporting</title>
+        @* === Bootstrap === *@
+        <script src="@routes.WebJarAssets.at(webJarAssets.locate("jquery.min.js"))" type="text/javascript"></script>
+        @* === Bootstrap === *@
+        <script src="@routes.WebJarAssets.at(webJarAssets.locate("bootstrap.min.js"))" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.WebJarAssets.at(webJarAssets.locate("css/bootstrap.min.css"))">
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        @* === AngularJS and route and cookies === *@
+        <script src="@routes.WebJarAssets.at(webJarAssets.locate("angular.min.js"))" type="text/javascript"></script>
+        <script src="@routes.WebJarAssets.at(webJarAssets.locate("angular-route.min.js"))" type="text/javascript"></script>
+        <script src="@routes.WebJarAssets.at(webJarAssets.locate("angular-cookies.min.js"))" type="text/javascript"></script>
+        @* === Bootstrap Angular UI === *@
+        <script src="@routes.WebJarAssets.at(webJarAssets.locate("ui-bootstrap-tpls.min.js"))" type="text/javascript"></script>
+        @* === Growl === *@
+        <link href="@routes.WebJarAssets.at(webJarAssets.locate("angular-growl.min.css"))" rel="stylesheet">
+        <script src="@routes.WebJarAssets.at(webJarAssets.locate("angular-growl.min.js"))"></script>
+
+        <script src="@routes.Assets.at("javascripts/app.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/query/QueryController.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/report/ReportController.js")" type="text/javascript"></script>
+    </head>
+    <body>
+        @*-- Header -- *@
+        <header class="navbar navbar-inverse basics-nav" data-ng-cloak>
+            <div class="container-fluid" data-ng-cloak>
+                <div class="navbar-header">
+                    <a href="#/" class="navbar-brand">
+                        Home
+                    </a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="mailto:vladimirbodnar@@yahoo.fr">vladimibodnar@@yahoo.fr</a></li>
+                    </ul>
+                </div>
+                <ul class="nav navbar-nav" style="float: right">
+                    <li><a href="#/query" class="navbar-nav pull-right">Query</a></li>
+                    <li><a href="#/reports" class="navbar-nav pull-right">Reports</a></li>
+                </ul>
+            </div>
+        </header>
+
+        @* -- Main Content -- *@
+        <section class="container-fluid" data-ng-cloak>
+           <ng-view></ng-view>
+        </section>
+
+        @*-- Footer -- *@
+        @*<footer data-ng-controller="FooterController">*@
+        @*</footer>*@
+    </body>
+</html>
