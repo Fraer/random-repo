@@ -41,4 +41,14 @@ class DaoSpec extends PlaySpec with Results with MockitoSugar {
       res should contain (Country("AG","Antigua and Barbuda"))
     }
   }
+
+  "surfaceTypesByCountry" should {
+    "should return surface type of a country" in {
+      val res = dao.surfaceTypesByCountry("AS")
+      res.size mustBe 3
+      res should contain ("TURF")
+      res should contain ("GRASS")
+      res should contain ("GRAVEL")
+    }
+  }
 }
