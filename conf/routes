@@ -8,10 +8,11 @@ GET  /highestAirports                     controllers.Report.highestAirports
 GET  /lowestAirports                      controllers.Report.lowestAirports
 GET  /surfaceTypes/:countryCode           controllers.Report.surfaceTypesPerCountry(countryCode)
 GET  /countries                           controllers.Report.countries()
+GET  /mostCommonLatitudes                 controllers.Report.mostCommonRunwayLatitude()
 
 GET  /airportsByCountryCode               controllers.Query.airportsByCountryCode(code:String, p:Int ?= 0, s:Int ?= 2)
-
 GET  /similarCountries                    controllers.Query.similarCountries(input:String)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET  /assets/*file                        controllers.Assets.at(path="/public", file)

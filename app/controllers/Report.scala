@@ -37,6 +37,9 @@ class Report @Inject()(val dao: Dao)
   }
 
   def mostCommonRunwayLatitude = Action(parse.empty) { req =>
-    Ok(Json.obj("a"-> "b"))
+    Ok(Json.toJson(
+      dao.mostCommonRunwayLatitudes().map{ x =>
+        Json.obj("latitude" -> x._1, "count" -> x._2)
+      }))
   }
 }

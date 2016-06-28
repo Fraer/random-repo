@@ -33,16 +33,6 @@
         };
         that.fetchLowestAirports();
 
-        that.surfaces = [];
-        that.surfaceTypes = function() {
-            $http.get('/surfaceTypes').then(
-                function (success) {
-                    that.surfaces = success.data;
-                },
-                function (err) { growl.error("Unable to fetch surfaces per country due to " + err.statusText); }
-            );
-        };
-
         that.currentCountry = null;
         that.countries = [];
         that.fetchCountries = function() {
@@ -60,13 +50,26 @@
                 $http.get('/surfaceTypes/' + that.currentCountry.code).then(
                     function (success) {
                         that.surfaceTypes = success.data;
-                        that.fetchingSurfaces = false;
                     },
                     function (err) { growl.error("Unable to fetch surface types by country due to " + err.statusText); }
                 ).finally(function() {
                     that.fetchingSurfaces = false;
                 });
             };
+
+        that.mostCommonLatitudes = [];
+        that.fetchLatitudes = function() {
+            that.fetchingLatitudes = true;
+            $http.get('/mostCommonLatitudes').then(
+                function (success) {
+                    that.mostCommonLatitudes = success.data;
+                },
+                function (err) { growl.error("Unable to fetch latitudes due to " + err.statusText); }
+            ).finally(function() {
+                that.fetchingLatitudes = false;
+            });
+        };
+        that.fetchLatitudes();
 
     });
 }());

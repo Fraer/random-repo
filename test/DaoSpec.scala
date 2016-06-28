@@ -84,4 +84,12 @@ class DaoSpec extends PlaySpec with Results with MockitoSugar {
       res.head._1 mustBe "American Samoa"
     }
   }
+
+  "mostCommonRunwayLatitudes" should {
+    "should return 10 most common runway latitudes" in {
+      val res = dao.mostCommonRunwayLatitudes()
+      res.size mustBe 10
+      res.head mustBe ("H1", 7)
+    }
+  }
 }

@@ -105,4 +105,15 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
         .collect()
       .map{row => row.getString(0)}
   }
+
+  def mostCommonRunwayLatitudes(): Seq[(String, Long)] = {
+    s.sqlCtx.sql(
+      """SELECT le_ident, count(le_ident) AS occ
+         FROM runway
+         GROUP BY le_ident
+         ORDER BY occ DESC
+         LIMIT 10""")
+      .collect()
+      .map{row => row.getString(0) -> row.getLong(1)}
+  }
 }
