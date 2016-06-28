@@ -72,7 +72,8 @@ class DaoSpec extends PlaySpec with Results with MockitoSugar {
     "should return 10 countries with less airports" in {
       val res = dao.lowestAirports()
       res.size mustBe 10
-      res should not contain "American Samoa"
+      res should contain ("Argentina" -> 1)
+      res should not contain ("American Samoa" -> 3)
     }
   }
 

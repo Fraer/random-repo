@@ -29,12 +29,13 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
     Page(items, page, offset, total)
   }
 
+  /** Returns all runways of an airport specified by id */
   def runwaysByAirport(airportId: Int): Seq[Runway] = {
-    s.sqlCtx.sql(
-      s"""SELECT r.id, r.length_ft, r.width_ft, r.surface FROM runway r
-          WHERE r.airport_ref='$airportId' ORDER BY r.id""")
+    s.runways.filter(col("airport_ref") === airportId)
+      .orderBy(col("id"))
+      .select("id", "length_ft", "width_ft", "surface")
       .collect
-      .map{ row =>
+      .map { row =>
         Runway(
           row.getInt(0),
           if (row.isNullAt(1)) -1 else row.getInt(1),
@@ -69,8 +70,7 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
 
   def countries(): Seq[Country] = {
     logger.info("Fetching all countries")
-    s.sqlCtx
-      .sql(s"""SELECT code, name FROM country ORDER BY name""")
+    s.countries.select("code","name").orderBy(col("name"))
       .collect()
       .map{row => Country(row.getString(0),row.getString(1))}
   }
