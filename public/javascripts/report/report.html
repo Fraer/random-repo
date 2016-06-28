@@ -10,14 +10,18 @@
             </div>
             <div class="panel-body">
                 <table class="table table-hover" align="center" border="1">
+                    <thead>
                     <tr>
                         <td>Name</td>
                         <td>Airports Count</td>
                     </tr>
+                    </thead>
+                    <tbody>
                     <tr ng-repeat="ac in ctrl.highestAirports">
                         <td>{{ac.name}}</td>
                         <td>{{ac.count}}</td>
                     </tr>
+                    </tbody>
                 </table>
                 <div ng-show="ctrl.fetchingHighest">Fetching ...</div>
             </div>
@@ -32,14 +36,18 @@
             </div>
             <div class="panel-body">
                 <table class="table table-hover" align="center" border="1">
-                    <tr>
-                        <td>Name</td>
-                        <td>Airports Count</td>
-                    </tr>
-                    <tr ng-repeat="ac in ctrl.lowestAirports">
-                        <td>{{ac.name}}</td>
-                        <td>{{ac.count}}</td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            <td>Airports Count</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="ac in ctrl.lowestAirports">
+                            <td>{{ac.name}}</td>
+                            <td>{{ac.count}}</td>
+                        </tr>
+                    </tbody>
                 </table>
                 <div ng-show="ctrl.fetchingLowest">Fetching ...</div>
             </div>
