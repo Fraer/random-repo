@@ -106,6 +106,7 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
       .map{row => row.getString(0)}
   }
 
+  /** Returns the top 10 most common runway latitudes a sequence of tuples (le_ident, count) */
   def mostCommonRunwayLatitudes(): Seq[(String, Long)] = {
     s.sqlCtx.sql(
       """SELECT le_ident, count(le_ident) AS occ
