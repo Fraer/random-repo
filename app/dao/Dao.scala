@@ -77,7 +77,8 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
 
   def countryByCode(code: String): Option[Country] = {
     logger.info(s"Looking for country with code $code")
-    s.countries.filter(upper(col("code")) === code.toUpperCase)
+    s.countries
+      .filter(upper(col("code")) === code.toUpperCase)
       .select(col("code"), col("name"))
       .take(1)
       .map{row => Country(row.getString(0), row.getString(1))}
@@ -86,7 +87,8 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
 
   def countriesWithNameLike(input: String, nbRows: Int = 10): Seq[Country] = {
     logger.info(s"Looking for countries with name like $input")
-    s.countries.filter(upper(col("name")).like(s"%${input.toUpperCase}%") )
+    s.countries
+      .filter(upper(col("name")).like(s"%${input.toUpperCase}%") )
       .select(col("code"), col("name"))
       .take(nbRows)
       .map{row => Country(row.getString(0), row.getString(1))}
