@@ -11,9 +11,9 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
 
   def airportsByCountryCode(countryCode: String, page: Int, pageSize: Int): Page[Airport] = {
     val offset = pageSize * page
-    val df = s.sqlCtx.sql(
-      s"""SELECT a.id, a.name, a.iso_region FROM airport a
-          WHERE a.iso_country='$countryCode' ORDER BY a.name""")
+    val df = s.airports.filter(col("iso_country") === countryCode)
+      .orderBy(col("name"))
+      .select("id", "name", "iso_region")
     val total = df.count()
     val filteredRdd = df.rdd.zipWithIndex()
       .collect {
@@ -63,7 +63,7 @@ class Dao @Inject()(val s: SparkLoader) extends util.Logging {
       """SELECT c.name, x.count FROM
            (SELECT iso_country, count(id) as count FROM airport GROUP BY iso_country) x
             JOIN country c ON c.code=x.iso_country
-        ORDER BY x.count ASC LIMIT 10""")
+        ORDER BY x.count ASC, c.name LIMIT 10""")
       .collect()
       .map{row => row.getString(0) -> row.getLong(1)}
   }
